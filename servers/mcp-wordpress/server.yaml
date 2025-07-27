@@ -1,0 +1,50 @@
+name: mcp-wordpress
+image: mcp/mcp-wordpress
+type: server
+meta:
+  category: productivity
+  tags:
+    - wordpress
+    - blogging
+    - cms
+about:
+  title: WordPress MCP Server
+  description: |
+    The WordPress MCP Server provides a bridge between AI assistants and WordPress sites through the Model Context Protocol.  
+    Manage posts, pages and plugins across multiple WordPress installations using natural language.  
+    Supports several authentication methods (application passwords, JWT, OAuth and cookie authentication), multi‑site management, intelligent caching and real‑time monitoring.
+  icon: https://raw.githubusercontent.com/docdyhr/mcp-wordpress/main/images/wordpress-mcp-logo.png
+source:
+  project: https://github.com/docdyhr/mcp-wordpress
+config:
+  description: Configure the connection to your WordPress site(s)
+  secrets:
+    - name: mcp-wordpress.app_password
+      env: WORDPRESS_APP_PASSWORD
+      example: xxxx xxxx xxxx xxxx xxxx xxxx
+  env:
+    - name: WORDPRESS_SITE_URL
+      example: https://myblog.com
+      value: '{{mcp-wordpress.site_url}}'
+    - name: WORDPRESS_USERNAME
+      example: admin
+      value: '{{mcp-wordpress.username}}'
+    - name: WORDPRESS_AUTH_METHOD
+      example: app-password
+      value: '{{mcp-wordpress.auth_method}}'
+  parameters:
+    type: object
+    properties:
+      site_url:
+        type: string
+        description: Base URL of your WordPress site
+      username:
+        type: string
+        description: Username used to authenticate with WordPress
+      auth_method:
+        type: string
+        description: Authentication method to use (app-password, jwt, oauth, cookie)
+        default: app-password
+    required:
+      - site_url
+      - username
